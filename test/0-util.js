@@ -1383,6 +1383,52 @@ describe('Tests for util functions', function () {
 
       assert.deepStrictEqual(data.deferreds, {foo: 4, bar: '4 interpolated'});
     });
+
+    it('replaces plain promise properties with their resolved values', async function () {
+      let data = {
+        fromPromise: Promise.resolve('resolved value'),
+        untouched: 'as-is'
+      };
+
+      await util.resolveAsyncConfigs(data);
+
+      assert.deepStrictEqual(data, {fromPromise: 'resolved value', untouched: 'as-is'});
+    });
+
+    it('replaces promises found in nested objects and arrays', async function () {
+      let data = {
+        nested: {secret: Promise.resolve('shhh')},
+        list: [1, Promise.resolve(2), {deep: Promise.resolve(3)}]
+      };
+
+      await util.resolveAsyncConfigs(data);
+
+      assert.deepStrictEqual(data, {nested: {secret: 'shhh'}, list: [1, 2, {deep: 3}]});
+    });
+
+    it('resolves promises copied into another object, such as the exported config', async function () {
+      // Simulates how the exported config singleton is built: extendDeep copies the
+      // promise reference before the deferred write-back can replace it on the source.
+      let source = {
+        deferreds: {
+          fromDatabase: deferConfig(async () => setTimeout(1, 'secret'))
+        }
+      };
+      util.resolveDeferredConfigs(source);
+
+      let copy = {};
+      util.extendDeep(copy, source);
+
+      await util.resolveAsyncConfigs(copy);
+
+      assert.deepStrictEqual(copy.deferreds, {fromDatabase: 'secret'});
+    });
+
+    it('rejects when a config promise rejects', async function () {
+      let data = {broken: Promise.reject(new Error('boom'))};
+
+      await assert.rejects(() => util.resolveAsyncConfigs(data), /boom/);
+    });
   });
 
   describe('Util.loadFileConfigs()', function() {
