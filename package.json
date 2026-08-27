@@ -4,7 +4,14 @@
   "main": "./lib/config.js",
   "module": "./lib/config.mjs",
   "exports": {
-    "import": "./lib/config.mjs"
+    "import": {
+      "types": "./types/lib/config.d.mts",
+      "default": "./lib/config.mjs"
+    },
+    "require": {
+      "types": "./types/lib/config.d.ts",
+      "default": "./lib/config.js"
+    }
   },
   "types": "types/lib/config.d.ts",
   "typesVersions": {
