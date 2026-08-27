@@ -1,6 +1,6 @@
 {
   "name": "config",
-  "version": "5.0.2",
+  "version": "5.0.1",
   "main": "./lib/config.js",
   "module": "./lib/config.mjs",
   "exports": {
@@ -10,22 +10,22 @@
   "typesVersions": {
     "*": {
       "parser": [
-        "types/parser.d.ts"
+        "types/parser.d.mts"
       ],
       "parser.mjs": [
-        "types/parser.d.ts"
+        "types/parser.d.mts"
       ],
       "lib/defer": [
-        "types/lib/defer.d.ts"
+        "types/lib/defer.d.mts"
       ],
       "lib/defer.mjs": [
-        "types/lib/defer.d.ts"
+        "types/lib/defer.d.mts"
       ],
       "lib/util": [
-        "types/lib/util.d.ts"
+        "types/lib/util.d.mts"
       ],
       "lib/util.mjs": [
-        "types/lib/util.d.ts"
+        "types/lib/util.d.mts"
       ]
     }
   },
