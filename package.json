@@ -1,27 +1,30 @@
 {
   "name": "config",
-  "version": "5.0.1",
+  "version": "5.0.2",
   "main": "./lib/config.js",
   "module": "./lib/config.mjs",
+  "exports": {
+    "import": "./lib/config.mjs"
+  },
   "types": "types/lib/config.d.ts",
   "typesVersions": {
     "*": {
       "parser": [
         "types/parser.d.ts"
       ],
-      "parser.js": [
+      "parser.mjs": [
         "types/parser.d.ts"
       ],
       "lib/defer": [
         "types/lib/defer.d.ts"
       ],
-      "lib/defer.js": [
+      "lib/defer.mjs": [
         "types/lib/defer.d.ts"
       ],
       "lib/util": [
         "types/lib/util.d.ts"
       ],
-      "lib/util.js": [
+      "lib/util.mjs": [
         "types/lib/util.d.ts"
       ]
     }
@@ -75,7 +78,8 @@
   "c8": {
     "include": [
       "*.js",
-      "lib/**/*.js"
+      "lib/**/*.js",
+      "lib/**/*.mjs"
     ],
     "report-dir": "./coverage",
     "reporter": "lcov"
